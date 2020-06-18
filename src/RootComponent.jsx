@@ -4,6 +4,7 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import ViewImageScreen from "./screens/ViewImageScreen";
 import Card from "./components/Card";
 import ListingDetailsScreen from "./screens/ListingDetailsScreen";
+import MessagesScreen from "./screens/Messages";
 
 function RootComponent() {
   return (
@@ -25,7 +26,7 @@ function RootComponent() {
     //   />
     // </View>
 
-    <ViewImageScreen />
+    <MessagesScreen />
   );
 }
 export default RootComponent;

@@ -6,4 +6,6 @@ export default {
   background: "#f8f9fa",
   text: "#1e2022",
   medium: "#6e6969",
+  light: "#f8f4f4",
+  danger: "#ff5252",
 };
