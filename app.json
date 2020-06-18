@@ -1,17 +1,12 @@
 {
-  "name": "shareplaces",
-  "displayName": "shareplaces",
+  "name": "donewithit",
+  "displayName": "donewithit",
+  "orientation": "portrait",
   "expo": {
-    "name": "shareplaces",
-    "slug": "shareplaces",
+    "name": "donewithit",
+    "slug": "donewithit",
     "version": "1.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "platforms": ["ios", "android", "web"],
+    "assetBundlePatterns": ["**/*"]
   }
 }

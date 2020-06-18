@@ -1,14 +1,7 @@
 import * as React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
-
-const Drawer = createDrawerNavigator();
-
+import WelcomeScreen from "./screens/WelcomeScreen";
+import ViewImageScreen from "./screens/ViewImageScreen";
 function RootComponent() {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName=""></Drawer.Navigator>
-    </NavigationContainer>
-  );
+  return <ViewImageScreen></ViewImageScreen>;
 }
 export default RootComponent;
