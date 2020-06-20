@@ -4,14 +4,13 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Modal,
-  Button,
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import PickerItem from "../components/PickerItem";
 import Screen from "../components/Screen";
 import AppText from "../components/AppText/AppText";
-import defaultStyles from "../config/styles";
+import { defaultStyles, Colors } from "../config";
 function AppPicker({ icon, items, placeholder, selectedItem, onSelected }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
@@ -21,10 +20,11 @@ function AppPicker({ icon, items, placeholder, selectedItem, onSelected }) {
           {icon && (
             <Icon name={icon} size={30} color={defaultStyles.Colors.medium} />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </AppText>
-
+          {selectedItem ? (
+            <AppText style={styles.text}> {selectedItem.label} </AppText>
+          ) : (
+            <AppText style={styles.placeholder}> {placeholder} </AppText>
+          )}
           {icon && (
             <Icon
               name="chevron-down"
@@ -37,7 +37,12 @@ function AppPicker({ icon, items, placeholder, selectedItem, onSelected }) {
       </TouchableWithoutFeedback>
       <Modal visible={modalVisible} animationType="slide">
         <Screen>
-          <Button title="close" onPress={() => setModalVisible(false)} />
+          <Icon
+            name="close"
+            size={30}
+            style={styles.iconClose}
+            onPress={() => setModalVisible(false)}
+          />
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
@@ -70,6 +75,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 5,
+  },
+  iconClose: {
+    position: "absolute",
+    right: 5,
+  },
+  placeholder: {
+    color: Colors.medium,
+    flex: 1,
   },
   text: {
     flex: 1,

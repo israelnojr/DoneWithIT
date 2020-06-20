@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import defaultStyles from "../config/styles";
+import { defaultStyles, Colors } from "../../config";
 function AppTextInput({ icon, ...otherProps }) {
   return (
     <View style={styles.container}>
@@ -14,7 +14,11 @@ function AppTextInput({ icon, ...otherProps }) {
           style={styles.icon}
         />
       )}
-      <TextInput style={defaultStyles.text} {...otherProps} />
+      <TextInput
+        placeholderTextColor={Colors.medium}
+        style={defaultStyles.text}
+        {...otherProps}
+      />
     </View>
   );
 }
