@@ -1,8 +1,8 @@
 import React from "react";
 import {} from "react-native";
 
-import ListingEditScreen from "./screens/ListingEditScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
 function RootComponent() {
-  return <ListingEditScreen />;
+  return <WelcomeScreen />;
 }
 export default RootComponent;
