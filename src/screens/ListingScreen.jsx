@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 
 import Screen from "../components/Screen";
-import Card from "../components/Card";
+import Card from "../components/AppCard";
 import Colors from "../config/color";
 const listings = [
   {

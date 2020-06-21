@@ -7,16 +7,25 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import PickerItem from "../components/PickerItem";
+import PickerItem from "./AppPickerItem";
 import Screen from "../components/Screen";
-import AppText from "../components/AppText/AppText";
+import { AppText } from "../components/AppText";
 import { defaultStyles, Colors } from "../config";
-function AppPicker({ icon, items, placeholder, selectedItem, onSelected }) {
+function AppPicker({
+  icon,
+  items,
+  placeholder,
+  selectedItem,
+  onSelected,
+  PickerItemComponent = PickerItem,
+  width = "100%",
+  numberOfComlumns = 1,
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width }]}>
           {icon && (
             <Icon name={icon} size={30} color={defaultStyles.Colors.medium} />
           )}
@@ -37,17 +46,21 @@ function AppPicker({ icon, items, placeholder, selectedItem, onSelected }) {
       </TouchableWithoutFeedback>
       <Modal visible={modalVisible} animationType="slide">
         <Screen>
-          <Icon
-            name="close"
-            size={30}
-            style={styles.iconClose}
-            onPress={() => setModalVisible(false)}
-          />
+          <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+            <Icon
+              name="close"
+              size={25}
+              style={styles.iconClose}
+              color={Colors.medium}
+            />
+          </TouchableWithoutFeedback>
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
+            numColumns={numberOfComlumns}
             renderItem={({ item }) => (
-              <PickerItem
+              <PickerItemComponent
+                item={item}
                 label={item.label}
                 onPress={() => {
                   setModalVisible(false);
@@ -69,7 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.Colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "100%",
     padding: 15,
     marginVertical: 10,
   },
@@ -79,6 +91,7 @@ const styles = StyleSheet.create({
   iconClose: {
     position: "absolute",
     right: 5,
+    top: -20,
   },
   placeholder: {
     color: Colors.medium,

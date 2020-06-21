@@ -9,6 +9,8 @@ import {
   AppFormPicker,
   AppSubmitButton,
 } from "../components/form";
+
+import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
@@ -19,9 +21,13 @@ const validationSchema = Yup.object().shape({
 });
 
 const categories = [
-  { label: "Furniture", value: 1 },
-  { label: "Clothing", value: 2 },
-  { label: "Camera", value: 3 },
+  { label: "Furniture", value: 1, backgroundColor: "green", icon: "seat" },
+  { label: "Fashion", value: 2, backgroundColor: "yellow", icon: "wc" },
+  { label: "Gadget", value: 3, backgroundColor: "dodgerblue", icon: "camera" },
+  { label: "Houses", value: 4, backgroundColor: "purple", icon: "home" },
+  { label: "Clothing", value: 5, backgroundColor: "black", icon: "atm" },
+  { label: "Camera & Bags", value: 6, backgroundColor: "pink", icon: "ballot" },
+  { label: "Ticketing", value: 1, backgroundColor: "grey", icon: "airplane" },
 ];
 function ListingEditScreen() {
   return (
@@ -42,11 +48,15 @@ function ListingEditScreen() {
           maxLength={8} // maxlenght for price is 10000 which means .99 should be added making it eight
           name="price"
           placeholder={"Price"}
+          width={120}
         />
         <AppFormPicker
           items={categories}
+          numberOfComlumns={3}
+          PickerItemComponent={CategoryPickerItem}
           name="category"
           placeholder="Choose Category"
+          width="70%"
         />
         <AppFormField
           maxLength={500}
