@@ -3,10 +3,12 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import AppNavigator from "./navigation/AppNavigation";
 import navigationTheme from "./navigation/navigationTheme";
+import AuthNavigator from "./navigation/AuthNavigator";
 function RootComponent() {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
+      {/* <AppNavigator /> */}
+      <AuthNavigator />
     </NavigationContainer>
   );
 }

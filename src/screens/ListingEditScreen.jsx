@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import * as Yup from "yup";
 
 import { defaultStyles } from "../config";
@@ -14,6 +14,8 @@ import CategoryPickerItem from "../components/CategoryPickerItem";
 import Screen from "../components/Screen";
 import { AppFormImagePicker } from "../components/form";
 import useLocation from "../hooks/useLocation";
+import UploadScreen from "../screens/UploadScreen";
+import listingApi from "../api/listings";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -33,46 +35,70 @@ const categories = [
   { label: "Ticketing", value: 1, backgroundColor: "grey", icon: "airplane" },
 ];
 function ListingEditScreen() {
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
   const location = useLocation();
+
+  const handleSubmit = async (listing, { resetForm }) => {
+    setProgress(0);
+    setUploadVisible(true);
+    const result = await listingApi.addListings(
+      { ...listing, location },
+      (progress) => setProgress(progress)
+    );
+    if (!result.ok) {
+      setUploadVisible(false);
+      return alert("Could not save the listings");
+    }
+    resetForm();
+  };
   return (
     <Screen style={styles.screen}>
-      <AppForm
-        initialValues={{
-          title: "",
-          price: "",
-          desc: "",
-          category: null,
-          images: [],
-        }}
-        onSubmit={(values) => console.log(values, location)}
-        validationSchema={validationSchema}
-      >
-        <AppFormImagePicker name="images" />
-        <AppFormField maxLength={255} name="title" placeholder={"Title"} />
-        <AppFormField
-          keyboardType="numeric"
-          maxLength={8} // maxlenght for price is 10000 which means .99 should be added making it eight
-          name="price"
-          placeholder={"Price"}
-          width={120}
+      <ScrollView>
+        <UploadScreen
+          onDone={() => setUploadVisible(false)}
+          progress={progress}
+          visible={uploadVisible}
         />
-        <AppFormPicker
-          items={categories}
-          numberOfComlumns={3}
-          PickerItemComponent={CategoryPickerItem}
-          name="category"
-          placeholder="Choose Category"
-          width="70%"
-        />
-        <AppFormField
-          maxLength={500}
-          multiline={true}
-          name="desc"
-          numberOfLines={3}
-          placeholder="Description"
-        />
-        <AppSubmitButton title="Post" />
-      </AppForm>
+        <AppForm
+          initialValues={{
+            title: "",
+            price: "",
+            desc: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={handleSubmit}
+          // onSubmit={(values) => console.log(values, location)}
+          validationSchema={validationSchema}
+        >
+          <AppFormImagePicker name="images" />
+          <AppFormField maxLength={255} name="title" placeholder={"Title"} />
+          <AppFormField
+            keyboardType="numeric"
+            maxLength={8} // maxlenght for price is 10000 which means .99 should be added making it eight
+            name="price"
+            placeholder={"Price"}
+            width={120}
+          />
+          <AppFormPicker
+            items={categories}
+            numberOfComlumns={3}
+            PickerItemComponent={CategoryPickerItem}
+            name="category"
+            placeholder="Choose Category"
+            width="70%"
+          />
+          <AppFormField
+            maxLength={500}
+            multiline={true}
+            name="desc"
+            numberOfLines={3}
+            placeholder="Description"
+          />
+          <AppSubmitButton title="Post" />
+        </AppForm>
+      </ScrollView>
     </Screen>
   );
 }

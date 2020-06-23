@@ -2,21 +2,27 @@ import React from "react";
 import { StyleSheet, Image } from "react-native";
 import * as Yup from "yup";
 
+import loginApi from "../api/auth";
 import { AppForm, AppFormField, AppSubmitButton } from "../components/form";
 import { defaultStyles } from "../config";
 import Screen from "../components/Screen";
+import routes from "../navigation/routes";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().max(25).label("Email"),
   password: Yup.string().required().min(5).label("Password"),
 });
-function LoginScreen(props) {
+function LoginScreen({ navigation }) {
+  const userLogin = async () => {
+    const res = await loginApi.userLogin();
+    console.log(res.data);
+  };
   return (
     <Screen style={styles.screen}>
       <Image style={styles.logo} source={require("../asset/logo-red.png")} />
       <AppForm
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => userLogin(values)}
         validationSchema={validationSchema}
       >
         <AppFormField

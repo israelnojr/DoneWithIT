@@ -1,45 +1,49 @@
-import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import routes from "../navigation/routes";
 import Screen from "../components/Screen";
 import Card from "../components/AppCard";
 import Colors from "../config/color";
-const listings = [
-  {
-    id: 1,
-    title: "Red Jacket for sale",
-    price: 100,
-    image: require("../asset/red-jacket.png"),
-  },
-  {
-    id: 2,
-    title: "GreenDodge Kid Jacket for sale",
-    price: 3500,
-    image: require("../asset/kid-jacket.png"),
-  },
-  {
-    id: 3,
-    title: "Sofa Chairs for your living room",
-    price: 10500,
-    image: require("../asset/interior.jpg"),
-  },
-  {
-    id: 4,
-    title: "Beautiful Sofa Chairs for your living room",
-    price: 1000,
-    image: require("../asset/interior1.jpg"),
-  },
-  {
-    id: 5,
-    title: "Beautiful office chairs",
-    price: 6500,
-    image: require("../asset/chair.jpg"),
-  },
-];
+import listingApi from "../api/listings";
+import AppText from "../components/AppText/AppText";
+import AppButton from "../components/button/AppButton";
+import AppActivityIndicator from "../components/AppActivityIndicator";
+import useApi from "../hooks/useApi";
+
 function ListingScreen({ navigation }) {
+  const { data: listings, error, loading, request: loadListings } = useApi(
+    listingApi.getListings
+  );
+  useEffect(() => {
+    loadListings();
+  }, []);
+
   return (
     <Screen style={styles.screen}>
+      {error && (
+        <>
+          <View style={styles.retry}>
+            <AppText>Couldn't retrieve listings.</AppText>
+            <AppButton title="Retry" onPress={loadListings} />
+          </View>
+        </>
+      )}
+      {listings && (
+        <>
+          <View style={styles.retry}>
+            <AppText>We got your Listing</AppText>
+          </View>
+        </>
+      )}
+
+      {loading && (
+        <>
+          <View style={styles.retry}>
+            <AppActivityIndicator autoplay={true} loop={true} visible={true} />
+          </View>
+        </>
+      )}
       <FlatList
         data={listings}
         keyExtractor={(listing) => listing.id.toString()}
@@ -62,5 +66,11 @@ const styles = StyleSheet.create({
   screen: {
     padding: 5,
     backgroundColor: Colors.light,
+  },
+  retry: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
   },
 });
