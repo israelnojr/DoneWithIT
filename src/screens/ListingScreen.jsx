@@ -29,13 +29,6 @@ function ListingScreen({ navigation }) {
           </View>
         </>
       )}
-      {listings && (
-        <>
-          <View style={styles.retry}>
-            <AppText>We got your Listing</AppText>
-          </View>
-        </>
-      )}
 
       {loading && (
         <>

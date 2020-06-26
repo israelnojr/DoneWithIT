@@ -69,7 +69,6 @@ function ListingEditScreen() {
             images: [],
           }}
           onSubmit={handleSubmit}
-          // onSubmit={(values) => console.log(values, location)}
           validationSchema={validationSchema}
         >
           <AppFormImagePicker name="images" />

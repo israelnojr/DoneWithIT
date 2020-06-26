@@ -7,6 +7,12 @@
     "slug": "donewithit",
     "version": "1.0.0",
     "platforms": ["ios", "android", "web"],
+    "icon": "./src/asset/logo-red.png",
+    "splash": {
+      "image": "./src/asset/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#e63c4b"
+    },
     "assetBundlePatterns": ["**/*"]
   }
 }

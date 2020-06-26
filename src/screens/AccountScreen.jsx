@@ -1,16 +1,17 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
+import useAuth from "../auth/useAuth";
+import AppIcon from "../components/AppIcon";
+import Colors from "../config/color";
 import Screen from "../components/Screen";
 import ListItem from "../components/ListItems";
-import Colors from "../config/color";
-import AppIcon from "../components/AppIcon";
 import ListItemSeparator from "../components/ListItemSeparator";
 const menuItems = [
   {
     title: "My Listings",
     icon: {
-      name: "ios-more",
+      name: "apps",
       backgroundColor: Colors.primary,
     },
   },
@@ -18,19 +19,20 @@ const menuItems = [
   {
     title: "My Messages",
     icon: {
-      name: "ios-mail",
+      name: "mail",
       backgroundColor: Colors.secondary,
     },
     targetScreen: "Messages",
   },
 ];
 function AccountScreen({ navigation }) {
+  const { user, logOut } = useAuth();
   return (
     <Screen style={styles.screen}>
       <View style={styles.container}>
         <ListItem
-          title="Grey Hawk"
-          subTitle="grey.hawk@gmail.com"
+          title={user.user.name}
+          subTitle={user.user.email}
           image={require("../asset/grey.jpeg")}
         />
       </View>
@@ -56,9 +58,8 @@ function AccountScreen({ navigation }) {
       </View>
       <ListItem
         title="Log Out"
-        IconComponent={
-          <AppIcon name="ios-power" backgroundColor={Colors.logout} />
-        }
+        IconComponent={<AppIcon name="power" backgroundColor={Colors.logout} />}
+        onPress={() => logOut()}
       />
     </Screen>
   );

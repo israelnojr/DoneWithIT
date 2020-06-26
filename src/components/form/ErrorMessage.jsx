@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 
 import { AppText } from "../../components/AppText";
 import { defaultStyles } from "../../config";
-function ErrorMessage({ error, visible }) {
+function ErrorMessage({ error, visible, style }) {
   if (!visible || !error) return null;
-  return <AppText style={styles.error}>{error}</AppText>;
+  return <AppText style={[styles.error, style]}>{error}</AppText>;
 }
 
 export default ErrorMessage;
